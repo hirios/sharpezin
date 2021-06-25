@@ -1,50 +1,47 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
-using System.Diagnostics;
+using System.Text;
 
-
-namespace EXEMPLO
+namespace primeiroAPP
 {
-    public class TESTES
+    public class PYTHON
     {
-        public static void Main() 
+
+        public string requests(string url)
         {
-            requests requests = new requests();
-            //string url = input("Insira um link: ");
-            //string output = requests.get(url);
+            WebRequest request = WebRequest.Create(
+                url);
+            // If required by the server, set the credentials.
+            request.Credentials = CredentialCache.DefaultCredentials;
 
-            //string[] splitado = output.Split('"');
+            // Get the response.
+            WebResponse response = request.GetResponse();
 
-            //foreach (string x in splitado)
-            //{
-            //    if( x.Contains("http") ) 
-            //    {
-            //        print(x + "\n");
-            //    }
-            //}
+            Stream dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            response.Close();
+            return responseFromServer;
 
-
-
-
-            /* AQUI É O QUE VAI SER RODADO */
-            open("models.txt");
-            input(" ");
         }
+        
 
-        static void print(string text)
+        public void print(string text)
         {
             Console.Write(text);
         }
 
-        static string input(string text)
+        public string input(string text)
         {
             print(text);
             string ouput = Console.ReadLine();
             return ouput;
         }
 
-        static string popen(string Command)
+        public string popen(string Command)
         {
             Process p = new Process();
             p.StartInfo.UseShellExecute = false;
@@ -61,7 +58,7 @@ namespace EXEMPLO
             return output;
         }
 
-        static void open(string path)
+        public void open(string path)
         {
             string readText = File.ReadAllText(path);
             Console.WriteLine(readText);
